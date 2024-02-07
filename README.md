@@ -44,4 +44,4 @@ An MOS 6502 system emulation suite, written in C and x86 assembly.
 - JSON parsing for system configuration: [cJSON](https://github.com/DaveGamble/cJSON)
 
 # References
-##### NesDev: [NesDev Wiki](https://www.nesdev.org/wiki/Nesdev_Wiki) - memory mapping, graphic rendering, some general architecture inspirations
+#### NesDev: [NesDev Wiki](https://www.nesdev.org/wiki/Nesdev_Wiki) - memory mapping, graphic rendering, some general architecture inspirations
