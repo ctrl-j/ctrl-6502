@@ -16,10 +16,10 @@ An MOS 6502 system emulation suite, written in C and x86 assembly.
   - Able to directly read 6502 assembly and "re-assemble" into equivalent x86 code
 
 # Specifications
-## Memory Map - 64 KB total addressable memory
-\(Sample memory map adapted from [NesDev](https://www.nesdev.org/wiki/Sample_RAM_map)\)
+## Address Map - 64 KB total address space
 
 ### 2 KB System RAM
+\(Sample RAM memory map adapted from [NesDev](https://www.nesdev.org/wiki/Sample_RAM_map)\)
 | Address Range | Width | Usage |
 | :---: | :---: | :---: |
 | *Zero page memory* | | `$0000 - $00FF` |
