@@ -17,7 +17,7 @@ An MOS 6502 system emulation suite, written in C and x86 assembly.
 
 # Specifications
 ## Memory Map - 64 KB total addressable memory
-\(Sample memory map adapted from (NesDev)[https://www.nesdev.org/wiki/Sample_RAM_map]\)
+\(Sample memory map adapted from [NesDev](https://www.nesdev.org/wiki/Sample_RAM_map)\)
 
 | Address Range | Width | Usage |
 | :---: | :---: | :---: |
