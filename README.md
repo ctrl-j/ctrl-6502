@@ -20,7 +20,7 @@ An MOS 6502 system emulation suite, written in C and x86 assembly.
 
 | Address Range | Width | Usage |
 | :---: | :---: | :---: |
-| `$0000 - $00FF`: Zero page memory |
+| `$0000 - $00FF`: **Zero page memory** |
 |`$0000 - $000F`| 16 B | Local variables, function arguments |
 |`$0010 - $00FF`| 240 B | Global variables, pointer tables |
 | `$0100 - $01FF`: Stack memory |
