@@ -19,6 +19,7 @@ An MOS 6502 system emulation suite, written in C and x86 assembly.
 ## Memory Map - 64 KB total addressable memory
 \(Sample memory map adapted from [NesDev](https://www.nesdev.org/wiki/Sample_RAM_map)\)
 
+### 2 KB System RAM
 | Address Range | Width | Usage |
 | :---: | :---: | :---: |
 | *Zero page memory* | | `$0000 - $00FF` |
@@ -32,11 +33,11 @@ An MOS 6502 system emulation suite, written in C and x86 assembly.
 |`$0300 - $00FF`| 256 B | Sound player and other variables |
 |`$0400 - $07FF`| 1024 B | Arrays, global variables that are used less often
 
+### 22 KB Graphics/Audio memory
 
-  - 2 KB System RAM
-  - 22 KB Graphics/Audio memory
-  - 8 KB Program/Work RAM
-  - 32 KB Program ROM with bank switching
+### 8 KB Program/Work RAM
+
+### 32 KB Program ROM with bank switching
 
 # Dependencies
 - User interface, sound, KB + mouse input: [raylib (Main website)](https://www.raylib.com/) [raylib (GitHub)](https://github.com/raysan5/raylib)
