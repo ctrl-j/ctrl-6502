@@ -19,7 +19,7 @@ An MOS 6502 system emulation suite, written in C and x86 assembly.
 ## Address Map - 64 KB total address space
 
 ### 2 KB System RAM
-\(Sample RAM memory map adapted from [NesDev](https://www.nesdev.org/wiki/Sample_RAM_map)\)
+>\(Sample RAM memory map adapted from [NesDev](https://www.nesdev.org/wiki/Sample_RAM_map)\)
 | Address Range | Width | Usage |
 | :---: | :---: | :---: |
 | *Zero page memory* | | `$0000 - $00FF` |
