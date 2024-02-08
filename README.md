@@ -40,6 +40,14 @@ An MOS 6502 system emulation suite, written in C and x86 assembly.
 
 ### 32 KB Program ROM with bank switching
 
+# TODO:
+- Memory allocation (marking bytes as in-use so that other stuff doesn't overwrite by accident)
+- Full NES compatability
+  - This mostly has to do with memory mapping
+  - Mirror internal RAM through $0800-$1FFF
+  - Mirror PPU registers through $2008-$3FFF
+  - Graphics and audio compatibility
+
 # Dependencies
 - User interface, sound, KB + mouse input: [raylib (Main website)](https://www.raylib.com/) [raylib (GitHub)](https://github.com/raysan5/raylib)
 - JSON parsing for system configuration: [cJSON](https://github.com/DaveGamble/cJSON)
