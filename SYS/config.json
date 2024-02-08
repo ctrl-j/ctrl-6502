@@ -1,0 +1,43 @@
+{
+    "MEM_MAP": {
+        "STACK": ["0x0100", "0x01FF"],
+        "SYSTEM_CONFIG": ["0x0200", "0x027F"],
+        "SYSTEM_GRAPHICS": ["0x0280", "0x33FF"],
+        "RAM": ["0x3400", "0x7FFF"],
+        "IO": [],
+        "PROGRAM": ["0x8000", "0xFFF9"]
+    },
+
+    "MEM_CONFIG": {
+        "NMI": "0xF400",
+        "RES": "0xFD00",
+        "BRK": "0xF000",
+        "BIOS_FILE": "SYS/BIOS.mc"
+    },
+
+    "GRAPHICS_CONFIG": {
+        "TITLE": {
+            "DESC": "ctrl-6502 MOS 6502 System Emulator [%d x %d] ver. %05.2f %s",
+            "VER": 1.00
+        },
+        "RES": {
+            "Large": {
+                "APP": [1800, 1200],
+                "CANVAS": [768, 720]
+            }, 
+            "Normal": {
+                "APP": [1200, 800],
+                "CANVAS": [512, 480]
+            }
+        },
+        "PALETTES": {
+            "P0": 
+            ["0x0000", "0x0000", "0x0000", "0x0000", 
+            "0x0000", "0x0000", "0x0000", "0x0000", 
+            "0x0000", "0x0000", "0x0000", "0x0000", 
+            "0x0000", "0x0000", "0x0000", "0x0000"]
+        }
+    },
+
+    "CPU_STARTUP_BEHAVIOR": "RESET"
+}
