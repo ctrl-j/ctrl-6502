@@ -53,4 +53,7 @@ An MOS 6502 system emulation suite, written in C and x86 assembly.
 - JSON parsing for system configuration: [cJSON](https://github.com/DaveGamble/cJSON)
 
 # References
-#### NesDev: [NesDev Wiki](https://www.nesdev.org/wiki/Nesdev_Wiki) - memory mapping, graphic rendering, some general architecture inspiration
+#### NesDev: [NesDev Wiki](https://www.nesdev.org/wiki/Nesdev_Wiki) 
+I used this very informative website to learn about memory mapping, graphics rendering, and other general information for my architecture.
+#### int10h: [The Ultimate Oldschool PC Font Pack (v2.2)](https://int10h.org/oldschool-pc-fonts/fontlist/)
+If you have a love for fonts used in old BIOS's and other random tech (like I do), take a minute to scroll through what this site has to offer. The main font I used is from the Toshiba Satellite 4200 (`PxPlus_ToshibaSat_8x14.ttf`)
