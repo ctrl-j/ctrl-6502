@@ -1,3 +1,8 @@
+/*
+    Copyright (C) 2024  Joshua Jackson
+    [Full GPL-3.0 license can be found in LICENSE, in the root folder]
+*/
+
 #ifndef __TESTS_H__
 #define __TESTS_H__
 
