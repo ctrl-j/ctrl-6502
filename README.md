@@ -23,13 +23,13 @@ An MOS 6502 system emulation suite, written in C and x86 assembly.
 
 | Section | Address Range | Width | Usage |
 | :---: | :---: | :---: | :---: |
-| *Zero page memory* | `$0000 - $00FF` |  | |
+| *Zero page memory* | `$0000 - $00FF` |  | *Reserved* |
 | |`$0000 - $000F`| 16 B | Local variables, function arguments |
 | |`$0010 - $00FF`| 240 B | Global variables, pointer tables |
-| *Stack memory* | `$0100 - $01FF` |  | |
+| *Stack memory* | `$0100 - $01FF` |  | *Reserved* |
 | |`$0100 - $019F`| 160 B | Nametable data to be copied during VBLANK |
 | |`$01A0 - $01FF`| 96 B | Stack memory |
-| *Other internal RAM* | `$0200 - $07FF` |  | |
+| *Other internal RAM* | `$0200 - $07FF` |  | *Open for any use* |
 | |`$0200 - $00FF`| 256 B | OAM data to be copied during VBLANK |
 | |`$0300 - $00FF`| 256 B | Sound player and other variables |
 | |`$0400 - $07FF`| 1024 B | Arrays, global variables that are used less often
