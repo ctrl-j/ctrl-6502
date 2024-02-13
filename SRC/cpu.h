@@ -7,6 +7,7 @@
 #define __CPU_H__
 
 #include "./INCLUDES/cJSON.h"
+#include <raylib.h>
 
 /********************************************
 * RAYLIB Types and Structures definitions

@@ -116,7 +116,7 @@ int main(int argc, char **argv){
         }
 
         // Read file contents into buffer and close config.json
-        char JSON_BUFF[1024];
+        char JSON_BUFF[2048];
         fread(JSON_BUFF, 1, sizeof(JSON_BUFF), CONFIG);
         fclose(CONFIG);
 
@@ -125,7 +125,7 @@ int main(int argc, char **argv){
         if (JSON == NULL) {
             const char *ERR_PTR = cJSON_GetErrorPtr();
             if (ERR_PTR != NULL) {
-                MSG = "*** ERROR PARSING CONFIG.JSON: %s ***\n";
+                MSG = "*** ERROR PARSING CONFIG.JSON: ballsack ***\n";
                 snprintf(BUFF, 256, MSG, ERR_PTR);
                 logMsg(stdout, BUFF, 9);
             }
@@ -396,16 +396,19 @@ HBYTE CPU_MAIN(MEM* SYSMEM, CPU* SYS, INSTR** INSTR_SET) {
     InitInitScreen();
     SetTargetFPS(60);
 
+    // Initialize CLI and memory viewer buffers
+    CONSOLE_BUFF* CLI_BUFFER = malloc(sizeof(CONSOLE_BUFF*));
+
     // Main raylib loop
     while (!WindowShouldClose()) {
-        UpdateDrawFrame();
+        UpdateDrawFrame(CLI_BUFFER);
         
     }
 
     // De-init
     switch (currentScreen) {
         case INIT: UnloadInitScreen(); break;
-        case MAIN: UnloadMainScreen(); break;
+        case MAIN: UnloadMainScreen(CLI_BUFFER); break;
         default: break;
     }
 
@@ -527,6 +530,12 @@ ADDRESS CPU_ISR_HANDLER(MEM* SYSMEM, CPU* SYS) {
     // If normal BRK
     if (SYS->BRK){
         // Default load is $FFFE/FFFF
+        // Check if interrupt-disable is TRUE
+        if (CPU_GET_STATUS(SYS, 2)) {
+            return 0xFFFF;
+        }
+
+        CPU_SET_STATUS(SYS, 2, true);
     }
     // Load address from $FFFA/FFFB
     else if (SYS->NMI) {

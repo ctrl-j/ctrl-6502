@@ -11,11 +11,20 @@
 extern int SCR_RES[2];
 extern int CANV_RES[2];
 
+
+// Command line text buffer (for GUI CLI)
+typedef struct _CONSOLE_BUFF {
+    int CHAR_WIDTH;
+    char** CMD_BUFF;
+    // Stores last 16 commands input
+    char** PREV_INPUT;
+} CONSOLE_BUFF;
+
 /********************************************
 * RAYLIB Function declarations
 ********************************************/
-void ChangeToScreen(ScreenPhase screen);
-void UpdateDrawFrame();
+void ChangeToScreen(ScreenPhase screen, CONSOLE_BUFF* CLI_BUFFER);
+void UpdateDrawFrame(CONSOLE_BUFF* CLI_BUFFER);
 
 // INIT SCREEN DRAW+UPDATE FUNCTIONS
 //////////////////////////
@@ -27,10 +36,10 @@ int FinishInitScreen();
 
 // MAIN SCREEN DRAW+UPDATE FUNCTIONS
 //////////////////////////
-void InitMainScreen();
-void UpdateMainScreen();
-void DrawMainScreen();
-void UnloadMainScreen();
+void InitMainScreen(CONSOLE_BUFF* CLI_BUFFER);
+void UpdateMainScreen(CONSOLE_BUFF* CLI_BUFFER);
+void DrawMainScreen(CONSOLE_BUFF* CLI_BUFFER);
+void UnloadMainScreen(CONSOLE_BUFF* CLI_BUFFER);
 int FinishMainScreen();
 // Drawing within DrawMainScreen()
 void DrawMEM();
@@ -49,6 +58,7 @@ void DrawTextExMultiLine(Font drawfont, const char *text, Vector2 position, floa
 typedef uint16_t COLOR_TETRA;
 
 typedef uint8_t PIXEL;
+
 
 // 16-color palette
 // 4 color sets of 4 colors each

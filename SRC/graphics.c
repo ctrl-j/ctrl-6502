@@ -20,43 +20,52 @@
 #include "graphics.h"
 
 HBYTE GRAPHICS_INIT(cJSON* GRAPHICS_CONFIG, char* PLATFORM) {
-    // Load resolution from CONFIG
-    // Default is 256W x 240H
-    cJSON* ITEM = cJSON_GetObjectItem(GRAPHICS_CONFIG, "RES");
-    // Parse window
-    cJSON* DATA = cJSON_GetArrayItem(ITEM, 0);
-    int WIDTH = DATA->valueint;
-    DATA = cJSON_GetArrayItem(ITEM, 1);
-    int HEIGHT = DATA->valueint;
-
-    // Format window title from CONFIG
-    ITEM = cJSON_GetObjectItem(GRAPHICS_CONFIG, "TITLE");
-    // Parse platform-dependent description
-    DATA = cJSON_GetObjectItem(ITEM, "DESC");
-    char BUFF[256];
-    char* MSG = DATA->valuestring;
-    // Parse version number
-    DATA = cJSON_GetObjectItem(ITEM, "VER");
-    double VERSION = DATA->valuedouble;
-
+    int WIDTH = 0;
+    int HEIGHT = 0;
+    
     // Initialize window, title will be set once resolution properly assigned
-    InitWindow(WIDTH, HEIGHT, "");
+    InitWindow(1, 1, "");
     // Initialize audio device
     InitAudioDevice();
 
+    // Load resolution from CONFIG
+    // Default is 256W x 240H
+    cJSON* ITEM = cJSON_GetObjectItem(GRAPHICS_CONFIG, "RES");
+    
+    // Parse window
     // Change window size based on target resolution
-    int DISP_WIDTH = GetScreenWidth();
+    int DISP_WIDTH = GetMonitorWidth(0);
+    printf("DISP_WIDTH: %d\n", DISP_WIDTH);
 
     // For 2560 x 1440 displays (my laptop)
     if (DISP_WIDTH == 2560) {
+        ITEM = cJSON_GetObjectItem(ITEM, "Large");
+        ITEM = cJSON_GetObjectItem(ITEM, "APP");
+
         WIDTH = cJSON_GetArrayItem(ITEM, 0)->valueint;
         HEIGHT = cJSON_GetArrayItem(ITEM, 1)->valueint;
     }
     // For 1920 x 1080 displays (average display)
     if (DISP_WIDTH == 1920) {
-        WIDTH = cJSON_GetArrayItem(ITEM, 2)->valueint;
-        HEIGHT = cJSON_GetArrayItem(ITEM, 3)->valueint;
+        ITEM = cJSON_GetObjectItem(ITEM, "Normal");
+        ITEM = cJSON_GetObjectItem(ITEM, "APP");
+
+        WIDTH = cJSON_GetArrayItem(ITEM, 0)->valueint;
+        HEIGHT = cJSON_GetArrayItem(ITEM, 1)->valueint;
     }
+    
+    printf("Width: %d, Height: %d\n", WIDTH, HEIGHT);
+
+    // Format window title from CONFIG
+    ITEM = cJSON_GetObjectItem(GRAPHICS_CONFIG, "TITLE");
+    // Parse platform-dependent description
+    ITEM = cJSON_GetObjectItem(ITEM, "DESC");
+    char BUFF[256];
+    char* MSG = ITEM->valuestring;
+    // Parse version number
+    ITEM = cJSON_GetObjectItem(GRAPHICS_CONFIG, "TITLE");
+    ITEM = cJSON_GetObjectItem(ITEM, "VER");
+    double VERSION = ITEM->valuedouble;
 
     // Format window title string
     snprintf(BUFF, 256, MSG, WIDTH, HEIGHT, VERSION, PLATFORM);
@@ -69,15 +78,15 @@ HBYTE GRAPHICS_INIT(cJSON* GRAPHICS_CONFIG, char* PLATFORM) {
 }
 
 // Update and draw next frame
-void UpdateDrawFrame() {
+void UpdateDrawFrame(CONSOLE_BUFF* CLI_BUFFER) {
     switch (currentScreen) {
         case INIT:
             UpdateInitScreen();
-            if (FinishInitScreen()) ChangeToScreen(MAIN);
+            if (FinishInitScreen()) ChangeToScreen(MAIN, CLI_BUFFER);
             break;
 
         case MAIN:
-            UpdateMainScreen();
+            UpdateMainScreen(CLI_BUFFER);
             break;
         
         default:
@@ -87,7 +96,7 @@ void UpdateDrawFrame() {
     BeginDrawing();
         switch (currentScreen) {
             case INIT: DrawInitScreen(); break;
-            case MAIN: DrawMainScreen(); break;
+            case MAIN: DrawMainScreen(CLI_BUFFER); break;
             default:
                 break;
         }
@@ -96,18 +105,18 @@ void UpdateDrawFrame() {
 
 }
 
-void ChangeToScreen(ScreenPhase screen) {
+void ChangeToScreen(ScreenPhase screen, CONSOLE_BUFF* CLI_BUFFER) {
     // Unload current screen
     switch (currentScreen) {
         case INIT: UnloadInitScreen(); break;
-        case MAIN: UnloadMainScreen(); break;
+        case MAIN: UnloadMainScreen(CLI_BUFFER); break;
         default: break;
     }
 
     // Init next screen
     switch (screen) {
         case INIT: InitInitScreen(); break;
-        case MAIN: InitMainScreen(); break;
+        case MAIN: InitMainScreen(CLI_BUFFER); break;
         default: break;
     }
 

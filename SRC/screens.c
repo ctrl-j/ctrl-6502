@@ -16,6 +16,7 @@ static int finishMainScreen = 0;
 
 Color DOSBLUE = {.r = 0, .g = 0, .b = 170, .a = 200};
 
+
 void InitInitScreen() {
     finishInitScreen = 0;
     
@@ -53,34 +54,55 @@ int FinishInitScreen() {
 
 
 
-void InitMainScreen() {
+void InitMainScreen(CONSOLE_BUFF* CLI_BUFFER) {
     finishMainScreen = 0;
+    int i = 0;
+    int j = 0;
+
+    // Initialize command buffer structure
+    CLI_BUFFER->CHAR_WIDTH = 80;
+    CLI_BUFFER->CMD_BUFF = malloc(sizeof(char[40][80]));
+    for (j = 0; j < 40; j++) {
+        i = 0;
+        printf("i: %d\n", i);
+        for (i = 0; i < 80; i++) {
+            CLI_BUFFER->CMD_BUFF[j][i] = (i % 26) + 65;
+            fputc(CLI_BUFFER->CMD_BUFF[j][i], stdout);
+            
+        }
+        
+        //printf("j: %d\n", j);
+    }
+    CLI_BUFFER->PREV_INPUT = malloc(sizeof(char[80]) * 16);
 
 }
 
-void UpdateMainScreen() {
+void UpdateMainScreen(CONSOLE_BUFF* CLI_BUFFER) {
     if (IsKeyPressed(KEY_ENTER)) {
         printf("FUCK\n\n\n\n\n");
     }
 
+    // Draw console text
+
+
 }
 
-void DrawMainScreen() {
+void DrawMainScreen(CONSOLE_BUFF* CLI_BUFFER) {
     ClearBackground(WHITE);
 
-    // Draw memory area 
+    // Draw console area 
     DrawRectangle(768, 0, 1032, 1200, DOSBLUE);
-    
-    // Draw console area
-    DrawRectangle(0, 720, 768, 480, RAYWHITE);
     // TODO: buffer to store past lines of output/input
+    
+    // Draw memory area
+    DrawRectangle(0, 720, 768, 480, RAYWHITE);
 
     // Draw screen area
     // 3x (256, 240) pixels
     DrawRectangle(0, 0, 768, 720, BLACK);
 }
 
-void UnloadMainScreen() {
+void UnloadMainScreen(CONSOLE_BUFF* CLI_BUFFER) {
     // Unload Main screen variables
 }
 

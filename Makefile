@@ -53,28 +53,28 @@ endif
 
 all: $(OBJ_DIR)/assembler.o $(OBJ_DIR)/cpu.o $(OBJ_DIR)/graphics.o $(OBJ_DIR)/mem.o $(OBJ_DIR)/tests.o $(OBJ_DIR)/cJSON.o $(EXEC_NAME)
 
-$(OBJ_DIR)/assembler.o: assembler.c
+$(OBJ_DIR)/assembler.o: SRC/assembler.c
 	$(CC) -c $(INCLUDE_PATHS) -o $@ $< $(CFLAGS) -DPLATFORM_DESKTOP
 
-$(OBJ_DIR)/cpu.o: cpu.c
+$(OBJ_DIR)/cpu.o: SRC/cpu.c
 	$(CC) -c $(INCLUDE_PATHS) -o $@ $< $(CFLAGS) -DPLATFORM_DESKTOP
 
-$(OBJ_DIR)/graphics.o: graphics.c
+$(OBJ_DIR)/graphics.o: SRC/graphics.c
 	$(CC) -c $(INCLUDE_PATHS) -o $@ $< $(CFLAGS) -DPLATFORM_DESKTOP
 
-$(OBJ_DIR)/mem.o: mem.c
+$(OBJ_DIR)/mem.o: SRC/mem.c
 	$(CC) -c $(INCLUDE_PATHS) -o $@ $< $(CFLAGS) -DPLATFORM_DESKTOP
 
-$(OBJ_DIR)/tests.o: tests.c
+$(OBJ_DIR)/tests.o: SRC/tests.c
 	$(CC) -c $(INCLUDE_PATHS) -o $@ $< $(CFLAGS) -DPLATFORM_DESKTOP
 
-$(OBJ_DIR)/util.o: util.c
+$(OBJ_DIR)/util.o: SRC/util.c
 	$(CC) -c $(INCLUDE_PATHS) -o $@ $< $(CFLAGS) -DPLATFORM_DESKTOP
 
 $(OBJ_DIR)/cJSON.o: ./INCLUDES/cJSON.c
 	$(CC) -c $(INCLUDE_PATHS) -o $@ $< $(CFLAGS) -DPLATFORM_DESKTOP
 
-$(OBJ_DIR)/screens.o: screens.c
+$(OBJ_DIR)/screens.o: SRC/screens.c
 	$(CC) -c $(INCLUDE_PATHS) -o $@ $< $(CFLAGS) -DPLATFORM_DESKTOP
 
 
