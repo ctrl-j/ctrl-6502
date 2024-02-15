@@ -31,6 +31,8 @@ typedef uint16_t ADDRESS;
 // Array of 256 hex digits = 256 bytes per page
 typedef HBYTE PAGE[256];
 
+typedef PAGE BANK[128];
+
 typedef struct _CPU {
     //////////////////
     // CPU Buses
@@ -129,11 +131,33 @@ typedef struct _MEM {
      * 
      * ROM:
      *  
+     *      $7FFF - $FFF9    Program ROM         [If program has graphics or audio data {specified by
+     *                                            file and page headers} it is read before rest of 
+     *                                            data, and then loaded into RAM]
      *      $FFFA - $FFFF    System vectors      [RESERVED]
      * 
      **/ 
 
 } MEM;
+
+typedef struct _PRG_ROM {
+    // Structure to hold temporary binary data being read from code file
+    // If headers indicate graphics or audio data, that stuff is transferred
+    //      from this struct into system RAM in appropriate locations.
+    // The rest of the data is mapped to the upper 32KB ROM section of system memory.
+    // If file being loaded is > 32KB, it is loaded in "chunks" or 32 KB banks.
+
+    // When bin file loaded, entire contents are split into 32KB chunks (or "BANK"s)
+    // and stored as array of BANKs in PRG_DATA.
+    BANK* PRG_DATA;
+
+    // Total number of used banks in the source file
+    HBYTE TOTAL_BANKS;
+    // Bank currently being accessed by the CPU
+    HBYTE CURR_BANK;
+    
+
+} PRG_ROM;
 
 typedef struct _INSTR {
     char* MNEM;
