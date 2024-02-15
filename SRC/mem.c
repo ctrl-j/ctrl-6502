@@ -246,11 +246,6 @@ HBYTE MEM_INIT(MEM* SYSMEM, cJSON* MEM_CONFIG) {
     MEM_WRITE(SYSMEM, 0xFFFF, NMI_SPLIT[0]);
     // NMI ADDRESS LOW BYTE
     MEM_WRITE(SYSMEM, 0xFFFE, NMI_SPLIT[1]);
-
-    // Write BIOS code to ROM from file in CONFIG
-    VECTOR = cJSON_GetObjectItem(MEM_CONFIG, "BIOS_FILE");
-    char *BIOS = VECTOR->valuestring;
-    MEM_LOAD(SYSMEM, BIOS, 0, 0, RST_ADDR, true);
     
     return 0;
 }
@@ -263,6 +258,7 @@ void STACK_PUSH(MEM* SYSMEM, CPU* SYS, HBYTE DATA, ADDRESS* WRITTEN) {
             *WRITTEN = 0x100;
         }
     }
+
     // Otherwise push new byte to top of stack and update STACK_TOP
     else {
         MEM_WRITE(SYSMEM, SYS->SP + 0x100, DATA);

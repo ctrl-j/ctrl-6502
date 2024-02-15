@@ -116,6 +116,22 @@ typedef struct _MEM {
     //      : $0100 - $01FF : system stack memory
     ///////////////////////////////////////////////
 
+    /** Memory Map - 64 KB addressable memory
+     * First 32 KB addressed to RAM
+     * Second 32 KB addressed to ROM, can be bank switched to go through more data
+     * 
+     * 32 KB (32,768 B) = 256 Kbit (262,144 bit) = Addresses $0000 - $7FFF 
+     * Size of 28C256 Paged Parallel EEPROM, and 62256 Static RAM
+     * 
+     * RAM:
+     *      $0000 - $00FF    Zero Page (ZP)      [RESERVED]
+     *      $0100 - $01FF    Stack               [RESERVED]
+     * 
+     * ROM:
+     *  
+     *      $FFFA - $FFFF    System vectors      [RESERVED]
+     * 
+     **/ 
 
 } MEM;
 

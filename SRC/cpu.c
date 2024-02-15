@@ -80,7 +80,6 @@ int main(int argc, char **argv){
         PLATFORM = "UNDEFINED";
     }
 
-
     ////////////////////////////////////////////
     // STEP 0:
     // Allocate memory for system structures:
@@ -97,6 +96,7 @@ int main(int argc, char **argv){
     // Allocate memory for instruction set array
     ////////////////////////////////////////////
     INSTR* INSTR_SET[256];
+
     for (i = 0; i < 256; i++) {
         INSTR_SET[i] = malloc(sizeof(INSTR));
         if (INSTR_SET[i] == NULL) {
@@ -398,6 +398,11 @@ HBYTE CPU_MAIN(MEM* SYSMEM, CPU* SYS, INSTR** INSTR_SET) {
 
     // Initialize CLI and memory viewer buffers
     CONSOLE_BUFF* CLI_BUFFER = malloc(sizeof(CONSOLE_BUFF*));
+
+    // Write BIOS code to ROM from file in CONFIG
+    //VECTOR = cJSON_GetObjectItem(MEM_CONFIG, "SYSTEM_CODE");
+    //char *SYSTEM_CODE = VECTOR->valuestring;
+    //MEM_LOAD(SYSMEM, SYSTEM_CODE, 0, 0, RST_ADDR, true);
 
     // Main raylib loop
     while (!WindowShouldClose()) {

@@ -1,18 +1,9 @@
 {
-    "MEM_MAP": {
-        "STACK": ["0x0100", "0x01FF"],
-        "SYSTEM_CONFIG": ["0x0200", "0x027F"],
-        "SYSTEM_GRAPHICS": ["0x0280", "0x33FF"],
-        "RAM": ["0x3400", "0x7FFF"],
-        "IO": [],
-        "PROGRAM": ["0x8000", "0xFFF9"]
-    },
-
     "MEM_CONFIG": {
         "NMI": "0xF400",
         "RES": "0xFD00",
         "BRK": "0xF000",
-        "BIOS_FILE": "SYS/BIOS.mc"
+        "SYSTEM_CODE": "SYS/BIOS.mc"
     },
 
     "GRAPHICS_CONFIG": {
