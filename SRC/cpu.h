@@ -79,10 +79,24 @@ typedef struct _CPU {
     // "READ" mode when 1, "WRITE" mode when 0
     bool WRITE_ENABLE;
 
+    // Detection of an NMI or IRQ hardware interrupt, 
+    // or BRK instruction, all execute the same process on 6502:
+    //      1. CPU finishes current instruction and associated processing
+    //      2. MSB of Program Counter (PC) pushed onto Stack (1B)
+    //      3. LSB of PC pushed onto Stack (1B)
+    //      4. Status Register (SR) pushed onto stack (1B)
+    //      5. Interrupt Disable CPU flag is set to 1 (b2 in SR)
+    //      6. PC is loaded from relevant vector, depending on interrupt type
+    //          Type          [LSB]  [MSB]
+    //            IRQ/BRK:    $FFFE, $FFFF
+    //            RST:        $FFFC, $FFFD
+    //            NMI:        $FFFA, $FFFB
+             
     bool NMI;
-    bool RST;
-    bool BRK;
     bool IRQ;
+    bool BRK;
+
+    bool RST;
 
 } CPU;
 
@@ -155,7 +169,7 @@ typedef struct _PRG_ROM {
     HBYTE TOTAL_BANKS;
     // Bank currently being accessed by the CPU
     HBYTE CURR_BANK;
-    
+
 
 } PRG_ROM;
 
