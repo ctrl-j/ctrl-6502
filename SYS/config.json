@@ -9,7 +9,7 @@
     "GRAPHICS_CONFIG": {
         "TITLE": {
             "DESC": "ctrl-6502 MOS 6502 System Emulator [%d x %d] ver. %05.2f %s",
-            "VER": 1.00
+            "VER": 0.2
         },
         "RES": {
             "Large": {
