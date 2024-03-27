@@ -40,7 +40,7 @@
 
 // cJSON is written by Dave Gamble and other contributers under the MIT License
 // ***citation needed***
-#include "./INCLUDES/cJSON.h"
+#include "../INCLUDES/cJSON.h"
 
 // Local includes
 #include "SYSTEM.h"
@@ -55,8 +55,12 @@ Music audio = { 0 };
 Sound soundfx = { 0 };
 
 int main(int argc, char **argv) {
+    char BUFF[256];
+    char *MSG;
+
     // Get platform from executable name (WINDOWS, LINUX, or DEBUG)
     char* EXEC_NAME = basename(argv[0]);
+    char *PLATFORM = NULL;
 
     printf("%s\n", EXEC_NAME);
     if (EXEC_NAME[0] == 'w') {
@@ -94,22 +98,44 @@ int main(int argc, char **argv) {
     //      -SYS_VAR_LOCATION: [start of location offset,
     //                          size of variable section]
     ////////////////////////////////////////////
-
+    // Allocate memory for CPU structure, system memory, instruction set
+    /////////////////////////////////////////////////////
     CPU* CPU_MAIN = malloc(sizeof(CPU));
     MEMORY* MEMORY_MAIN = malloc(sizeof(MEMORY));
     
-    INSTR* INSTR_SET[256];
+    INSTRUCTION* INSTR_SET[256];
     for (i = 0; i < 256; i++) {
-        INSTR_SET[i] = malloc(sizeof(INSTR));
+        INSTR_SET[i] = malloc(sizeof(INSTRUCTION));
         if (INSTR_SET[i] == NULL) {
             printf("CPU INIT ERROR: Failed to allocate memory while building instruction set.\n");
             return EXIT_FAILURE;
         }
     }
-
-    FILE *CONFIG = fopen("SYS/config.json", "r");
+    ///////////////////////////
+    // Open configuartion file
+    ///////////////////////////
+    FILE *CONFIG = fopen("../SYS/config.json", "r");
     if (CONFIG == NULL) {
         logMsg(stdout, "*** CANNOT OPEN CONFIG.JSON, TERMINATING ***\n", 9);
+        return EXIT_FAILURE;
+    }
+
+    // Read file contents into buffer and close config.json
+    char JSON_BUFF[2048];
+    fread(JSON_BUFF, 1, sizeof(JSON_BUFF), CONFIG);
+    fclose(CONFIG);
+
+    // Parse JSON data
+    cJSON *JSON = cJSON_Parse(JSON_BUFF);
+    if (JSON == NULL) {
+        const char *ERR_PTR = cJSON_GetErrorPtr();
+        if (ERR_PTR != NULL) {
+            MSG = "*** ERROR PARSING CONFIG.JSON ***\n";
+            snprintf(BUFF, 256, MSG, ERR_PTR);
+            printf(MSG);
+        }
+
+        cJSON_Delete(JSON);
         return EXIT_FAILURE;
     }
 

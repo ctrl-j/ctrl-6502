@@ -21,7 +21,7 @@
 #ifndef __SYSTEM_H__
 #define __SYSTEM_H__
 
-#include "./INCLUDES/cJSON.h"
+#include "../INCLUDES/cJSON.h"
 #include <raylib.h>
 
 // User-defined types for the system and CPU
