@@ -17,3 +17,13 @@
 */
 
 // [Full GPL-3.0 license can be found in LICENSE, in the root folder]
+
+
+#ifndef __SCREENS_H__
+#define __SCREENS_H__
+
+#include <raylib.h>
+
+Color DOSBLUE = {.r = 0, .g = 0, .b = 170, .a = 200};
+
+#endif

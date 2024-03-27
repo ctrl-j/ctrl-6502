@@ -1,34 +1,16 @@
-{
+{    
+    "CPU_STARTUP_ACTION": "BIOS",
+    "CPU_STARTUP_MODE": "TEXT",
+    "RESOLUTION": [1800, 1200],
+
     "MEM_CONFIG": {
-        "NMI": "0xF400",
-        "RES": "0xFD00",
-        "BRK": "0xF000",
-        "SYSTEM_CODE": "SYS/BIOS.mc"
+        "RAM_SIZE": "32768",
+        "ROM_SIZE": "32768",
+        "SYS_VAR_LOCATION": [256, 768]
     },
-
-    "GRAPHICS_CONFIG": {
-        "TITLE": {
-            "DESC": "ctrl-6502 MOS 6502 System Emulator [%d x %d] ver. %05.2f %s",
-            "VER": 0.2
-        },
-        "RES": {
-            "Large": {
-                "APP": [1800, 1200],
-                "CANVAS": [768, 720]
-            }, 
-            "Normal": {
-                "APP": [1200, 800],
-                "CANVAS": [512, 480]
-            }
-        },
-        "PALETTES": {
-            "P0": 
-            ["0x0000", "0x0000", "0x0000", "0x0000", 
-            "0x0000", "0x0000", "0x0000", "0x0000", 
-            "0x0000", "0x0000", "0x0000", "0x0000", 
-            "0x0000", "0x0000", "0x0000", "0x0000"]
-        }
-    },
-
-    "CPU_STARTUP_BEHAVIOR": "RESET"
+    
+    "TITLE": {
+        "DESC": "ctrl-6502 MOS 6502 System Emulator [%d x %d] ver. %05.2f %s",
+        "VER": 0.2
+    }
 }
