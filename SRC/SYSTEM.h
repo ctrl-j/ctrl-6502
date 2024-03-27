@@ -117,4 +117,7 @@ extern Font mainFont;
 //extern Music mainAudio;
 extern Sound mainFX;
 
+extern CPU* systemCore;
+extern MEMORY* systemMemory;
+
 #endif

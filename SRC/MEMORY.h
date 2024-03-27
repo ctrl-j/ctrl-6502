@@ -21,7 +21,11 @@
 #ifndef __MEMORY_H__
 #define __MEMORY_H__
 
-// Flashes system RAM from binary source
+#include <stdbool.h>
+
+#include "SYSTEM.h"
+
+// Flashes system ROM from binary source
 //      -MEMORY (MEM*)
 //          structure containing memory HBYTE array
 //      -SRC (char*)
@@ -40,14 +44,14 @@
 //      -PRESERVE (bool)
 //          0: write 0's to rest of RAM
 //          1: preserve RAM other than flashed memory
-void MEM_LOAD(MEMORY* MEMORY, char* SRC,
-                   WORD SRC_START, WORD SRC_WIDTH,
+void MEM_LOAD(char* SRC, WORD SRC_START, WORD SRC_WIDTH,
                    WORD MEM_START, bool PRESERVE);
 
-// Exports portion of system memory to [DST].le binary file
+// Exports portion of system memory to [DST].md binary file
 // Loads {$MEM_START - $(MEM_START + MEM_WIDTH)}
 // If MEM_WIDTH = 0, contents are copied until end of memory
-void MEM_SAVE(MEMORY* MEMORY, char* DST,
-                WORD MEM_START, WORD MEM_WIDTH);                  
+void MEM_SAVE(char* DST, WORD MEM_START, WORD MEM_WIDTH);                  
+
+BYTE* MEM_READ();
 
 #endif

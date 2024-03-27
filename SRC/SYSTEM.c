@@ -54,7 +54,13 @@ Font font = { 0 };
 Music audio = { 0 };
 Sound soundfx = { 0 };
 
+// "GlObAl" structures
+CPU* SYSTEM_CORE;
+MEMORY* SYSTEM_MEMORY;
+
 int main(int argc, char **argv) {
+    int i = 0;
+
     char BUFF[256];
     char *MSG;
 
@@ -100,8 +106,8 @@ int main(int argc, char **argv) {
     ////////////////////////////////////////////
     // Allocate memory for CPU structure, system memory, instruction set
     /////////////////////////////////////////////////////
-    CPU* CPU_MAIN = malloc(sizeof(CPU));
-    MEMORY* MEMORY_MAIN = malloc(sizeof(MEMORY));
+    SYSTEM_CORE = malloc(sizeof(CPU));
+    SYSTEM_MEMORY = malloc(sizeof(MEMORY));
     
     INSTRUCTION* INSTR_SET[256];
     for (i = 0; i < 256; i++) {
@@ -131,7 +137,6 @@ int main(int argc, char **argv) {
         const char *ERR_PTR = cJSON_GetErrorPtr();
         if (ERR_PTR != NULL) {
             MSG = "*** ERROR PARSING CONFIG.JSON ***\n";
-            snprintf(BUFF, 256, MSG, ERR_PTR);
             printf(MSG);
         }
 
