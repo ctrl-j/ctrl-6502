@@ -58,6 +58,8 @@ Sound soundfx = { 0 };
 CPU* SYSTEM_CORE;
 MEMORY* SYSTEM_MEMORY;
 
+int MAIN_LOOP();
+
 int main(int argc, char **argv) {
     int i = 0;
 
@@ -169,4 +171,60 @@ int main(int argc, char **argv) {
     ////////////////////////////////////////////
 
     return EXIT_SUCCESS;
+}
+
+int MAIN_LOOP() {
+    // Raylib draw loop
+
+    // CPU Loop:
+    //      1. Fetch instruction from PC location
+    //      2. Execute instruction
+    //          A. Determine addressing mode
+    //             Addressing mode-specific data fetch operations:
+    //              Accumulator (2 cycles) - reads current value of accumulator register
+    //              Immediate (2 cycles) - 1 byte read following instr
+    //              Implied (2 cycles) - no data, for BRK and flag instructions
+    //              Relative (2/3 cycles) - 1 signed byte read following instr,
+    //                                      offsets +/-127 from current PC. Extra cycle used if offset causes a cross into a new page
+    //              Zero Page (3 cycles) - 1 byte offset from the zero page
+    //              Zero Page X- or Y- indexed (4 cycles) - adds index to 1 byte offset; If index addition causes carry, 
+    //                                                      the carry is dropped and returned address wraps around to 0
+    //              Absolute, Absolute X- and Y-indexed (4/5 cycles) - Word/address read following instr;
+    //                              Can also be X/Y indexed. Extra cycle used if crossing a page when using index
+    //              Indirect (5 cycles) - Word read as memory pointer following 
+    //                                  instr, then reads value stored at that pointer
+    //              Indirect X- and Y-indexed (5/6 cycles for Y, 6 cycles for X) -
+    //                                1 byte read following instr, added to ZP, indexed by X or Y;
+    //                                Word located at the calculated address is returned;
+    //                                X-index increments w/o carry, Y-index increments w/ carry (extra cycle if carry)
+    //          B. Set CPU state machine input
+    //              Nothing: (Acc, Implied)
+    //              Byte: (Indirect X/Y, ZP, ZP X/Y, Immediate, Relative)
+    //              Word: (Absolute, Absolute X/Y, Indirect)
+    //              
+    //              Post:
+    //                  X or Y indexed?
+    //                      Swap index reg to X/Y if not eq. to instr addr mode
+    //                  Indirect?
+    //                      Grab word at location pointed to by data
+    //          C. Perform instruction function using appropriate input
+    //      3. Interrupt Handling
+    //          Handled after the instr fetch+execution since 6502 allows instr to finish
+    //          when interrupt is called anyways. IDK how accurate this is to the actual order it occurs
+    //          -RST:
+    //              Reset routine, only called on startup or system reset
+    //          -BRK/IRQ:
+    //              Can be initiated via the BRK instruction or using IRQ pin (emulated)
+    //              Can be masked/disabled with the interrupt disable CPU status flag.
+    //          -NMI:   
+    //              Non-maskable interrupt, initiated using NMI pin (emulated)
+    //////////////////////////////////////////////
+    // When interrupt request is called,
+    //      1. Pushes HIGH BYTE of return address to stack
+    //      2. Pushes LOW BYTE of return address to stack
+    //      3. Pushes status register to stack
+    //      4. Get IRQ/NMI vector LOW BYTE from $FFFE/A
+    //      5. Get IRQ/NMI vector HIGH BYTE from $FFFF/B
+    //      6. Jump to vector and begin executing ISR         
+
 }

@@ -52,6 +52,14 @@ void MEM_LOAD(char* SRC, WORD SRC_START, WORD SRC_WIDTH,
 // If MEM_WIDTH = 0, contents are copied until end of memory
 void MEM_SAVE(char* DST, WORD MEM_START, WORD MEM_WIDTH);                  
 
-BYTE* MEM_READ();
+BYTE MEM_READ(WORD ADDRESS);
+
+void MEM_WRITE(BYTE DATA, WORD ADDRESS);
+
+// Pushes one byte DATAT to the stack, pushed address written to ADDRESS
+void STACK_PUSH(BYTE DATA, WORD* ADDRESS);
+
+// Pops one byte from stack, returns data in DATA, popped address in ADDRESS
+void STACK_POP(BYTE* DATA, WORD* ADDRESS);
 
 #endif

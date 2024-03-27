@@ -57,7 +57,7 @@ void MEM_LOAD(char* SRC, WORD SRC_START, WORD SRC_WIDTH, WORD MEM_START, bool PR
         }
         else {
             BYTE = fgetc(CODE);
-            MEM_WRITE(systemMemory, WRITE, BYTE);
+            MEM_WRITE(WRITE, BYTE);
             WRITE++;
         }
     }
@@ -83,10 +83,42 @@ void MEM_SAVE(char* DST, WORD MEM_START, WORD MEM_WIDTH) {
     }
     
     for (INC = MEM_START; INC < (MEM_START + WIDTH); INC++) {
-        BYTE = MEM_READ(systemMemory, INC);
+        BYTE = MEM_READ(INC);
         
         fputc(BYTE, BIN);
     }
     fclose(BIN);
 
+}
+
+void STACK_PUSH(BYTE DATA, WORD* ADDRESS) {
+    // If stack is full, replace byte at top of stack
+    if (systemCore->SP == 0) {
+        MEM_WRITE(0x100, DATA);
+        if (ADDRESS != NULL) {
+            *ADDRESS = 0x100;
+        }
+    }
+
+    // Otherwise push new byte to top of stack and update STACK_TOP
+    else {
+        MEM_WRITE(systemCore->SP + 0x100, DATA);
+        if (ADDRESS != NULL) {
+            *ADDRESS = systemCore->SP;
+        }
+        systemCore->SP -= 1;
+    }
+}
+
+void STACK_POP(BYTE* DATA, WORD* ADDRESS) {
+    // Stack is empty
+    if (systemCore->SP == 0xFF) {
+        return systemMemory->RAM[1][255];
+    }
+    else {
+        systemCore->SP += 1;
+        *ADDRESS = systemCore->SP;
+        return MEM_READ(systemCore->SP + 0x100);
+    }
+    
 }
